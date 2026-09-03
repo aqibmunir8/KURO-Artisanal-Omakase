@@ -10,19 +10,19 @@ import { Star, Quote, Sparkles } from "lucide-react";
 export const AmbienceGallery: React.FC = () => {
   const galleryItems = [
     {
-      key: "interior-ambient",
-      isVideo: true,
+      key: "interior-counter",
+      isVideo: false,
       fallback: "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=1200&q=85",
       title: "The 300-Year Hinoki Counter",
       subtitle: "12 Exclusive Seats",
       span: "col-span-12 md:col-span-7",
     },
     {
-      key: "cocktail-smoke",
+      key: "interior-ambient",
       isVideo: true,
       fallback: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1200&q=85",
-      title: "Smokeworks Mixology & Sake Cellar",
-      subtitle: "Rare Vintage Cask Selections",
+      title: "Atmospheric Sanctuary & Counter",
+      subtitle: "Cinematic Room Perspective",
       span: "col-span-12 md:col-span-5",
     },
     {
@@ -34,11 +34,11 @@ export const AmbienceGallery: React.FC = () => {
       span: "col-span-12 md:col-span-5",
     },
     {
-      key: "dish-2",
-      isVideo: false,
-      fallback: "https://images.unsplash.com/photo-1611143669185-af224c5e3252?auto=format&fit=crop&w=1200&q=85",
-      title: "Artisanal Tableware",
-      subtitle: "Hand-thrown Karatsu Ceramics",
+      key: "cocktail-smoke",
+      isVideo: true,
+      fallback: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1200&q=85",
+      title: "Smokeworks Mixology & Sake Cellar",
+      subtitle: "Rare Vintage Cask Selections",
       span: "col-span-12 md:col-span-7",
     },
   ];

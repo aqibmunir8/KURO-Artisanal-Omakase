@@ -24,8 +24,6 @@ export const MenuShowcase: React.FC<MenuShowcaseProps> = ({
 
   return (
     <section id="menu" className="relative py-28 px-6 sm:px-8 max-w-7xl mx-auto">
-      {/* Background Decorative Glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-ember-glow opacity-40 pointer-events-none" />
 
       {/* Section Header */}
       <div className="flex flex-col items-center text-center mb-16 relative z-10">

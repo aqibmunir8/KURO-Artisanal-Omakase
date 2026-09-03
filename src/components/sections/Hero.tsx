@@ -63,7 +63,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenReservation }) => {
           className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-light text-zinc-100 tracking-[0.08em] uppercase leading-[1.08] mb-6"
         >
           Where Fire <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-100 via-gold-300 to-ember">
+          <span className="block text-gold-300 font-serif tracking-[0.06em] mt-2 sm:mt-3 drop-shadow-[0_2px_25px_rgba(212,175,55,0.45)]">
             Meets Transcendence
           </span>
         </motion.h1>

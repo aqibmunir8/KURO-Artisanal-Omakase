@@ -50,9 +50,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenReservation }) => {
   };
 
   return (
-    <footer id="location" className="relative bg-[#060608] border-t border-white/[0.08] pt-24 pb-12 overflow-hidden">
-      {/* Background Radial Glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-radial-dark opacity-50 pointer-events-none" />
+    <footer id="location" className="relative bg-background border-t border-white/[0.08] pt-24 pb-12 overflow-hidden">
 
       <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
         {/* Top Highlight Banner */}

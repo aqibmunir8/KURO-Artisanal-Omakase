@@ -59,7 +59,7 @@ export default {
         "gold-gradient": "linear-gradient(135deg, #FBF5E6 0%, #D4AF37 50%, #8C6507 100%)",
         "gold-shimmer": "linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.2) 50%, transparent 100%)",
         "radial-dark": "radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.06) 0%, transparent 70%)",
-        "ember-glow": "radial-gradient(circle at 50% 50%, rgba(255, 78, 32, 0.15) 0%, transparent 60%)",
+        "ember-glow": "radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 70%)",
       },
     },
   },

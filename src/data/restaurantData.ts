@@ -175,8 +175,8 @@ export const MENU_ITEMS: MenuItem[] = [
     ingredients: ["Yamada Nishiki Rice (35% Polish)", "Spring Water from Gassan Mount"],
     provenance: "Takagi Shuzo, Yamagata Prefecture",
     price: 350,
-    imageKey: "cocktail-pairing",
-    fallbackImage: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?auto=format&fit=crop&w=1200&q=85",
+    imageKey: "juyondai-sake",
+    fallbackImage: "/assets/juyondai-sake.jpg",
     tags: ["Rare Sake", "Grand Cru", "Bottle"],
   },
 ];
