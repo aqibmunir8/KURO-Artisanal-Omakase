@@ -4,6 +4,8 @@ import "./globals.css";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { NoiseOverlay } from "@/components/ui/NoiseOverlay";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
+import { LocalDataProvider } from "@/context/LocalDataContext";
+import { ServiceWorkerRegister } from "@/components/ui/ServiceWorkerRegister";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -72,11 +74,14 @@ export default function RootLayout({
       className={`${cormorant.variable} ${plusJakarta.variable} dark`}
     >
       <body className="font-sans antialiased bg-background text-zinc-100 selection:bg-gold-500/30 selection:text-gold-100">
-        <SmoothScroll>
-          <CustomCursor />
-          <NoiseOverlay />
-          {children}
-        </SmoothScroll>
+        <LocalDataProvider>
+          <ServiceWorkerRegister />
+          <SmoothScroll>
+            <CustomCursor />
+            <NoiseOverlay />
+            {children}
+          </SmoothScroll>
+        </LocalDataProvider>
       </body>
     </html>
   );

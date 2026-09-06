@@ -7,26 +7,53 @@ import { sound } from "@/lib/sound";
 export const Preloader: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
   const [percent, setPercent] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
+  const [isFastReturn, setIsFastReturn] = useState(false);
 
   useEffect(() => {
+    // Check if session has already loaded
+    const alreadySeen = typeof window !== "undefined" && sessionStorage.getItem("kuro_session_loaded");
+    if (alreadySeen) {
+      setIsFastReturn(true);
+      // Fast smooth exit for instant refresh feel
+      setPercent(100);
+      const timer = setTimeout(() => {
+        setIsFinished(true);
+        onComplete?.();
+      }, 180);
+      return () => clearTimeout(timer);
+    }
+
     const interval = setInterval(() => {
       setPercent((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
+          if (typeof window !== "undefined") {
+            sessionStorage.setItem("kuro_session_loaded", "true");
+          }
           setTimeout(() => {
             setIsFinished(true);
             sound.playChime();
             onComplete?.();
-          }, 400);
+          }, 350);
           return 100;
         }
-        const increment = Math.floor(Math.random() * 8) + 2;
+        const increment = Math.floor(Math.random() * 12) + 4;
         return Math.min(100, prev + increment);
       });
-    }, 45);
+    }, 35);
 
     return () => clearInterval(interval);
   }, [onComplete]);
+
+  const handleSkip = () => {
+    setPercent(100);
+    setIsFinished(true);
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("kuro_session_loaded", "true");
+    }
+    sound.playChime();
+    onComplete?.();
+  };
 
   return (
     <AnimatePresence>
@@ -36,19 +63,20 @@ export const Preloader: React.FC<{ onComplete?: () => void }> = ({ onComplete })
           initial={{ opacity: 1 }}
           exit={{
             clipPath: ["polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)", "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)"],
-            transition: { duration: 1.1, ease: [0.76, 0, 0.24, 1] },
+            transition: { duration: isFastReturn ? 0.4 : 0.9, ease: [0.76, 0, 0.24, 1] },
           }}
-          className="fixed inset-0 z-[999] flex flex-col items-center justify-center bg-[#08080A] text-zinc-100 overflow-hidden"
+          onClick={handleSkip}
+          className="fixed inset-0 z-[999] flex flex-col items-center justify-center bg-[#08080A] text-zinc-100 overflow-hidden cursor-pointer selection:bg-transparent"
         >
           {/* Subtle Ambient Radial Glow */}
           <div className="absolute inset-0 bg-radial-dark pointer-events-none" />
 
           {/* Central Monogram */}
-          <div className="relative flex flex-col items-center justify-center">
+          <div className="relative flex flex-col items-center justify-center pointer-events-none">
             <motion.div
-              initial={{ opacity: 0, scale: 0.8, y: 15 }}
+              initial={{ opacity: 0, scale: 0.85, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
               className="relative mb-6"
             >
               {/* Gold Crest Ring */}
@@ -63,7 +91,7 @@ export const Preloader: React.FC<{ onComplete?: () => void }> = ({ onComplete })
             <motion.h1
               initial={{ opacity: 0, letterSpacing: "0.2em" }}
               animate={{ opacity: 1, letterSpacing: "0.45em" }}
-              transition={{ duration: 1, delay: 0.2 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
               className="text-xl sm:text-2xl font-serif font-light text-zinc-100 tracking-[0.45em] uppercase text-center mb-1"
             >
               KURO
@@ -72,7 +100,7 @@ export const Preloader: React.FC<{ onComplete?: () => void }> = ({ onComplete })
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.6 }}
-              transition={{ duration: 1, delay: 0.4 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
               className="text-[10px] sm:text-xs font-sans tracking-[0.3em] uppercase text-zinc-400 mb-8"
             >
               Omakase &amp; Fire Craft

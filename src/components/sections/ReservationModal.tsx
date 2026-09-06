@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { RESTAURANT_INFO } from "@/data/restaurantData";
 import { sound } from "@/lib/sound";
@@ -15,7 +15,12 @@ import {
   CheckCircle2,
   AlertCircle,
   Flame,
+  Download,
+  Trash2,
+  BookmarkCheck,
 } from "lucide-react";
+import { useLocalData } from "@/context/LocalDataContext";
+import { Reservation } from "@/lib/localStore";
 
 interface ReservationModalProps {
   isOpen: boolean;
@@ -26,6 +31,10 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
   isOpen,
   onClose,
 }) => {
+  const { activeReservation, addReservation, cancelActiveReservation, guestProfile } =
+    useLocalData();
+
+  const [viewMode, setViewMode] = useState<"book" | "manage">("book");
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
   const [experience, setExperience] = useState<"counter" | "private">("counter");
   const [partySize, setPartySize] = useState<number>(2);
@@ -36,6 +45,26 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
   const [guestEmail, setGuestEmail] = useState("");
   const [guestPhone, setGuestPhone] = useState("");
   const [dietaryNotes, setDietaryNotes] = useState("");
+  const [latestBooking, setLatestBooking] = useState<Reservation | null>(null);
+
+  // Initialize form with saved local profile
+  useEffect(() => {
+    if (guestProfile) {
+      if (guestProfile.name && !guestName) setGuestName(guestProfile.name);
+      if (guestProfile.email && !guestEmail) setGuestEmail(guestProfile.email);
+      if (guestProfile.phone && !guestPhone) setGuestPhone(guestProfile.phone);
+      if (guestProfile.dietaryNotes && !dietaryNotes) setDietaryNotes(guestProfile.dietaryNotes);
+      if (guestProfile.preferredPairing) setPairingTier(guestProfile.preferredPairing);
+    }
+  }, [guestProfile]);
+
+  useEffect(() => {
+    if (activeReservation) {
+      setViewMode("manage");
+    } else {
+      setViewMode("book");
+    }
+  }, [activeReservation, isOpen]);
 
   if (!isOpen) return null;
 
@@ -53,17 +82,39 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
     { time: "8:30 PM", label: "Evening Seating", left: 4 },
   ];
 
+  const calculateTotal = () => {
+    let perPerson = RESTAURANT_INFO.pricing.omakasePrice;
+    if (pairingTier === "reserve") perPerson += RESTAURANT_INFO.pricing.reservePairing;
+    if (pairingTier === "rare") perPerson += RESTAURANT_INFO.pricing.rareSakePairing;
+    return perPerson * partySize;
+  };
+
   const handleComplete = (e: React.FormEvent) => {
     e.preventDefault();
     if (!guestName || !guestEmail) return;
 
     sound.playChime();
+
+    const created = addReservation({
+      guestName,
+      guestEmail,
+      guestPhone,
+      experience,
+      partySize,
+      date: selectedDate,
+      time: selectedTime,
+      pairingTier,
+      dietaryNotes,
+      totalAmount: calculateTotal(),
+    });
+
+    setLatestBooking(created);
     setStep(4);
 
     try {
       confetti({
-        particleCount: 80,
-        spread: 70,
+        particleCount: 90,
+        spread: 75,
         origin: { y: 0.6 },
         colors: ["#D4AF37", "#FBF5E6", "#FF5E36", "#FFFFFF"],
       });
@@ -72,11 +123,27 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
     }
   };
 
-  const calculateTotal = () => {
-    let perPerson = RESTAURANT_INFO.pricing.omakasePrice;
-    if (pairingTier === "reserve") perPerson += RESTAURANT_INFO.pricing.reservePairing;
-    if (pairingTier === "rare") perPerson += RESTAURANT_INFO.pricing.rareSakePairing;
-    return perPerson * partySize;
+  const downloadCalendarEvent = (res: Reservation) => {
+    sound.playClick();
+    const icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//KURO Omakase//Reservation//EN
+BEGIN:VEVENT
+SUMMARY:KURO Omakase Reservation (${res.confirmationCode})
+DESCRIPTION:12-Seat Artisanal Omakase & Fire Craft at KURO.\\nParty Size: ${res.partySize} guests\\nConfirmation: ${res.confirmationCode}\\nAddress: 484 Broome St, SoHo, NY
+LOCATION:484 Broome Street, New York, NY 10013
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR`;
+
+    const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `KURO-Reservation-${res.confirmationCode}.ics`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -114,17 +181,125 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
             <X className="w-5 h-5" />
           </button>
 
-          {/* Stepper Header */}
-          <div className="flex items-center gap-2 mb-8">
-            <span className="text-xs font-serif text-gold-300">黒 KURO</span>
-            <span className="text-zinc-600">/</span>
-            <span className="text-xs font-sans uppercase tracking-widest text-zinc-400">
-              {step === 4 ? "Confirmed" : `Step ${step} of 3`}
-            </span>
-          </div>
+          {/* Active Reservation Management View */}
+          {viewMode === "manage" && activeReservation && (
+            <div>
+              <div className="flex items-center gap-2 mb-6">
+                <span className="text-xs font-serif text-gold-300">黒 KURO</span>
+                <span className="text-zinc-600">/</span>
+                <span className="text-xs font-sans uppercase tracking-widest text-gold-400 font-semibold flex items-center gap-1">
+                  <BookmarkCheck className="w-3.5 h-3.5" />
+                  Active VIP Reservation
+                </span>
+              </div>
+
+              <div className="p-6 rounded-2xl bg-gradient-to-b from-surface-200 to-surface-100 border border-gold-400/40 mb-6 relative overflow-hidden">
+                <div className="absolute top-0 right-0 px-4 py-1.5 bg-gold-400/20 text-gold-200 text-[10px] font-mono tracking-widest border-b border-l border-gold-400/30 rounded-bl-xl">
+                  {activeReservation.confirmationCode}
+                </div>
+
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-full bg-gold-500/20 border border-gold-400/40 flex items-center justify-center">
+                    <Flame className="w-5 h-5 text-gold-300" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-serif text-zinc-100">
+                      {activeReservation.experience === "counter"
+                        ? "Chef's 18-Course Omakase Counter"
+                        : "Private Salon Dining"}
+                    </h3>
+                    <p className="text-xs font-sans text-zinc-400">
+                      Reserved for <span className="text-gold-200 font-semibold">{activeReservation.guestName}</span>
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-4 border-t border-white/[0.08] text-xs font-sans">
+                  <div>
+                    <span className="text-[10px] uppercase tracking-widest text-zinc-500 block">Date</span>
+                    <span className="text-zinc-200 font-medium">{activeReservation.date}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase tracking-widest text-zinc-500 block">Seating</span>
+                    <span className="text-zinc-200 font-medium">{activeReservation.time}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase tracking-widest text-zinc-500 block">Party</span>
+                    <span className="text-zinc-200 font-medium">{activeReservation.partySize} Guests</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase tracking-widest text-zinc-500 block">Pairing</span>
+                    <span className="text-gold-300 font-medium capitalize">{activeReservation.pairingTier}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase tracking-widest text-zinc-500 block">Total</span>
+                    <span className="text-gold-300 font-medium">${activeReservation.totalAmount.toLocaleString()}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase tracking-widest text-zinc-500 block">Status</span>
+                    <span className="text-emerald-400 font-medium flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3" /> Confirmed
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button
+                  type="button"
+                  onClick={() => downloadCalendarEvent(activeReservation)}
+                  className="flex-1 py-3 rounded-xl bg-gold-500/20 border border-gold-400/40 text-gold-200 font-sans text-xs uppercase tracking-wider font-semibold flex items-center justify-center gap-2 hover:bg-gold-500/30 transition-all"
+                >
+                  <Download className="w-4 h-4" />
+                  Add to Calendar (.ics)
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    sound.playClick();
+                    if (confirm("Are you sure you wish to cancel this reservation?")) {
+                      cancelActiveReservation(activeReservation.id);
+                      setViewMode("book");
+                      setStep(1);
+                    }
+                  }}
+                  className="py-3 px-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-300 font-sans text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-red-500/20 transition-all"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  Cancel Reservation
+                </button>
+              </div>
+
+              <div className="mt-4 text-center">
+                <button
+                  type="button"
+                  onClick={() => {
+                    sound.playClick();
+                    setViewMode("book");
+                    setStep(1);
+                  }}
+                  className="text-xs font-sans text-zinc-400 hover:text-gold-300 underline"
+                >
+                  Book an additional seating →
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Stepper Header for Booking */}
+          {viewMode === "book" && (
+            <div className="flex items-center gap-2 mb-8">
+              <span className="text-xs font-serif text-gold-300">黒 KURO</span>
+              <span className="text-zinc-600">/</span>
+              <span className="text-xs font-sans uppercase tracking-widest text-zinc-400">
+                {step === 4 ? "Confirmed" : `Step ${step} of 3`}
+              </span>
+            </div>
+          )}
 
           {/* Step 1: Experience & Party Size */}
-          {step === 1 && (
+          {viewMode === "book" && step === 1 && (
             <div>
               <h3 className="text-2xl sm:text-3xl font-serif text-zinc-100 mb-2">
                 Select Your Experience
@@ -226,7 +401,7 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
           )}
 
           {/* Step 2: Date & Seating Selection */}
-          {step === 2 && (
+          {viewMode === "book" && step === 2 && (
             <div>
               <h3 className="text-2xl sm:text-3xl font-serif text-zinc-100 mb-2">
                 Select Date &amp; Seating
@@ -377,13 +552,13 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
           )}
 
           {/* Step 3: Guest Details & Confirmation */}
-          {step === 3 && (
+          {viewMode === "book" && step === 3 && (
             <form onSubmit={handleComplete}>
               <h3 className="text-2xl sm:text-3xl font-serif text-zinc-100 mb-2">
                 Guest Information
               </h3>
               <p className="text-xs font-sans text-zinc-400 mb-6">
-                Please provide your contact details for VIP concierge confirmation.
+                Your VIP concierge confirmation will be securely remembered locally.
               </p>
 
               <div className="space-y-4 mb-6">
@@ -488,35 +663,35 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
           )}
 
           {/* Step 4: Success Confirmation */}
-          {step === 4 && (
+          {viewMode === "book" && step === 4 && latestBooking && (
             <div className="text-center py-6">
               <div className="w-16 h-16 rounded-full bg-gold-500/20 border border-gold-400/60 flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(212,175,55,0.4)]">
                 <CheckCircle2 className="w-8 h-8 text-gold-300" />
+              </div>
+
+              <div className="inline-block px-3 py-1 rounded-full bg-surface-200 border border-gold-400/30 text-gold-300 text-xs font-mono mb-3">
+                Confirmation #{latestBooking.confirmationCode}
               </div>
 
               <h3 className="text-2xl sm:text-3xl font-serif text-zinc-100 mb-2">
                 Reservation Request Secured
               </h3>
 
-              <p className="text-xs sm:text-sm font-sans text-zinc-300 max-w-md mx-auto mb-8 leading-relaxed">
-                Thank you, <span className="text-gold-200 font-semibold">{guestName}</span>. Your {partySize}-guest reservation for{" "}
-                <span className="text-gold-200 font-semibold">{selectedDate}</span> at{" "}
-                <span className="text-gold-200 font-semibold">{selectedTime}</span> has been provisioned. Our VIP Maitre d' will reach out shortly to finalize your bespoke preferences.
+              <p className="text-xs sm:text-sm font-sans text-zinc-300 max-w-md mx-auto mb-6 leading-relaxed">
+                Thank you, <span className="text-gold-200 font-semibold">{latestBooking.guestName}</span>. Your {latestBooking.partySize}-guest reservation for{" "}
+                <span className="text-gold-200 font-semibold">{latestBooking.date}</span> at{" "}
+                <span className="text-gold-200 font-semibold">{latestBooking.time}</span> is stored in your local session.
               </p>
 
-              <div className="p-4 rounded-2xl bg-surface-200/70 border border-white/[0.06] max-w-md mx-auto mb-8 text-left space-y-2">
-                <div className="flex justify-between text-xs font-sans text-zinc-400">
-                  <span>Experience:</span>
-                  <span className="text-zinc-200">12-Seat Omakase Counter</span>
-                </div>
-                <div className="flex justify-between text-xs font-sans text-zinc-400">
-                  <span>Address:</span>
-                  <span className="text-zinc-200">484 Broome St, SoHo, NY</span>
-                </div>
-                <div className="flex justify-between text-xs font-sans text-zinc-400">
-                  <span>Dress Code:</span>
-                  <span className="text-gold-300">Elegant Evening Attire</span>
-                </div>
+              <div className="flex justify-center gap-3 mb-8">
+                <button
+                  type="button"
+                  onClick={() => downloadCalendarEvent(latestBooking)}
+                  className="px-5 py-2.5 rounded-full bg-gold-500/20 hover:bg-gold-500/30 border border-gold-400/40 text-gold-200 text-xs font-sans uppercase tracking-wider flex items-center gap-2 transition-all"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  Add to Calendar
+                </button>
               </div>
 
               <button

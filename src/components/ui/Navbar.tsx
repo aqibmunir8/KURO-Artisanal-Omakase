@@ -3,9 +3,10 @@
 import React, { useState, useEffect } from "react";
 import { sound } from "@/lib/sound";
 import { SoundController } from "./SoundController";
-import { Menu, X, Calendar } from "lucide-react";
+import { Menu, X, Calendar, CheckCircle2, Bookmark } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { RESTAURANT_INFO } from "@/data/restaurantData";
+import { useLocalData } from "@/context/LocalDataContext";
 
 interface NavbarProps {
   onOpenReservation: () => void;
@@ -14,12 +15,13 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onOpenReservation }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { activeReservation, favorites } = useLocalData();
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 40);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -44,9 +46,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservation }) => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 will-change-transform ${
           scrolled
-            ? "bg-[#08080A]/85 backdrop-blur-xl border-b border-white/[0.06] py-3.5 shadow-[0_10px_30px_rgba(0,0,0,0.6)]"
+            ? "bg-[#08080A]/90 backdrop-blur-xl border-b border-white/[0.06] py-3.5 shadow-[0_10px_30px_rgba(0,0,0,0.6)]"
             : "bg-transparent py-6"
         }`}
       >
@@ -94,21 +96,39 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservation }) => {
           <div className="hidden sm:flex items-center gap-4">
             <SoundController />
 
-            <button
-              onClick={() => {
-                sound.playChime();
-                onOpenReservation();
-              }}
-              onMouseEnter={() => sound.playHover()}
-              data-cursor-text="Book"
-              className="relative group overflow-hidden px-5 py-2.5 rounded-full bg-gradient-to-r from-gold-500/20 via-gold-400/30 to-ember/20 hover:from-gold-500/40 hover:to-ember/40 border border-gold-400/50 hover:border-gold-300 transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.15)]"
-            >
-              <span className="relative z-10 flex items-center gap-2 text-xs font-sans uppercase tracking-[0.18em] font-semibold text-gold-100">
-                <Calendar className="w-3.5 h-3.5 text-gold-300" />
-                Reserve Seat
-              </span>
-              <div className="absolute inset-0 bg-gold-shimmer translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 pointer-events-none" />
-            </button>
+            {/* If reservation is booked locally, show Active Pass button */}
+            {activeReservation ? (
+              <button
+                onClick={() => {
+                  sound.playChime();
+                  onOpenReservation();
+                }}
+                onMouseEnter={() => sound.playHover()}
+                data-cursor-text="Booking"
+                className="relative group overflow-hidden px-4 py-2 rounded-full bg-surface-100 border border-gold-400/60 hover:border-gold-300 transition-all duration-300 shadow-[0_0_15px_rgba(212,175,55,0.2)]"
+              >
+                <span className="relative z-10 flex items-center gap-2 text-[11px] font-sans uppercase tracking-[0.16em] font-medium text-gold-200">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-gold-400" />
+                  VIP Pass: {activeReservation.date.split("-").slice(1).join("/")}
+                </span>
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  sound.playChime();
+                  onOpenReservation();
+                }}
+                onMouseEnter={() => sound.playHover()}
+                data-cursor-text="Book"
+                className="relative group overflow-hidden px-5 py-2.5 rounded-full bg-gradient-to-r from-gold-500/20 via-gold-400/30 to-ember/20 hover:from-gold-500/40 hover:to-ember/40 border border-gold-400/50 hover:border-gold-300 transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.15)]"
+              >
+                <span className="relative z-10 flex items-center gap-2 text-xs font-sans uppercase tracking-[0.18em] font-semibold text-gold-100">
+                  <Calendar className="w-3.5 h-3.5 text-gold-300" />
+                  Reserve Seat
+                </span>
+                <div className="absolute inset-0 bg-gold-shimmer translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 pointer-events-none" />
+              </button>
+            )}
           </div>
 
           {/* Mobile Menu Trigger */}
@@ -158,7 +178,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservation }) => {
               className="mt-2 w-full py-3.5 rounded-full bg-gold-500/20 border border-gold-400/60 text-gold-200 font-sans text-xs uppercase tracking-[0.2em] font-semibold flex items-center justify-center gap-2"
             >
               <Calendar className="w-4 h-4 text-gold-400" />
-              Reserve a Counter Seat
+              {activeReservation ? "View Your Active VIP Reservation" : "Reserve a Counter Seat"}
             </button>
           </motion.div>
         )}

@@ -4,16 +4,24 @@ import React, { useState, useEffect } from "react";
 import { RESTAURANT_INFO } from "@/data/restaurantData";
 import { sound } from "@/lib/sound";
 import { MapPin, Phone, Mail, Clock, Sparkles, Send, Check } from "lucide-react";
+import { useLocalData } from "@/context/LocalDataContext";
 
 interface FooterProps {
   onOpenReservation: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onOpenReservation }) => {
+  const { data, subscribeNewsletter } = useLocalData();
   const [nyTime, setNyTime] = useState("");
   const [tokyoTime, setTokyoTime] = useState("");
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+
+  useEffect(() => {
+    if (data.newsletterSubscribed) {
+      setSubscribed(true);
+    }
+  }, [data.newsletterSubscribed]);
 
   useEffect(() => {
     const updateClocks = () => {
@@ -45,13 +53,13 @@ export const Footer: React.FC<FooterProps> = ({ onOpenReservation }) => {
     e.preventDefault();
     if (!email) return;
     sound.playChime();
+    subscribeNewsletter(email);
     setSubscribed(true);
     setEmail("");
   };
 
   return (
     <footer id="location" className="relative bg-background border-t border-white/[0.08] pt-24 pb-12 overflow-hidden">
-
       <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
         {/* Top Highlight Banner */}
         <div className="p-8 sm:p-12 rounded-3xl bg-surface-100/50 border border-gold-400/20 backdrop-blur-xl mb-20 flex flex-col md:flex-row items-center justify-between gap-8">
@@ -188,22 +196,24 @@ export const Footer: React.FC<FooterProps> = ({ onOpenReservation }) => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter VIP email..."
-                required
-                className="w-full px-4 py-3 rounded-xl bg-surface-100 border border-white/10 text-xs text-zinc-100 focus:outline-none focus:border-gold-400/50 pr-12 placeholder:text-zinc-600"
+                placeholder={subscribed ? "Subscribed with VIP status" : "Enter VIP email..."}
+                required={!subscribed}
+                disabled={subscribed}
+                className="w-full px-4 py-3 rounded-xl bg-surface-100 border border-white/10 text-xs text-zinc-100 focus:outline-none focus:border-gold-400/50 pr-12 placeholder:text-zinc-600 disabled:opacity-75"
               />
               <button
                 type="submit"
+                disabled={subscribed}
                 aria-label="Subscribe to newsletter"
-                className="absolute right-1.5 top-1.5 bottom-1.5 px-3 rounded-lg bg-gold-500/20 hover:bg-gold-500/30 text-gold-200 transition-colors flex items-center justify-center"
+                className="absolute right-1.5 top-1.5 bottom-1.5 px-3 rounded-lg bg-gold-500/20 hover:bg-gold-500/30 text-gold-200 transition-colors flex items-center justify-center disabled:hover:bg-gold-500/20"
               >
                 {subscribed ? <Check className="w-4 h-4 text-emerald-400" /> : <Send className="w-3.5 h-3.5" />}
               </button>
             </form>
 
             {subscribed && (
-              <p className="text-[11px] font-sans text-emerald-400">
-                You have been registered for private priority allocations.
+              <p className="text-[11px] font-sans text-emerald-400 flex items-center gap-1.5">
+                <Check className="w-3.5 h-3.5" /> Registered for private priority allocations.
               </p>
             )}
 

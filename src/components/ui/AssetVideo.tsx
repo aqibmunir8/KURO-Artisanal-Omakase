@@ -19,48 +19,57 @@ export const AssetVideo: React.FC<AssetVideoProps> = ({
   className,
   overlayOpacity = 0.5,
 }) => {
-  const [videoAvailable, setVideoAvailable] = useState(false);
+  const [videoAvailable, setVideoAvailable] = useState(true);
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  // IntersectionObserver to pause heavy rendering when out of viewport
   useEffect(() => {
-    // Check if video file exists locally
-    const videoUrl = `/assets/${videoKey}.mp4`;
-    const req = new XMLHttpRequest();
-    req.open("HEAD", videoUrl, true);
-    req.onload = () => {
-      if (req.status >= 200 && req.status < 300) {
-        setVideoAvailable(true);
-      }
-    };
-    req.onerror = () => {
-      setVideoAvailable(false);
-    };
-    req.send();
-  }, [videoKey]);
+    const el = containerRef.current;
+    if (!el) return;
 
-  // Ambient Ember & Charcoal Particle Canvas Animation when video is generating or loading
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+        if (videoRef.current) {
+          if (entry.isIntersecting) {
+            videoRef.current.play().catch(() => {});
+          } else {
+            videoRef.current.pause();
+          }
+        }
+      },
+      { rootMargin: "100px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Ambient Ember & Charcoal Particle Canvas Animation (Runs only when in viewport)
   useEffect(() => {
+    if (!isVisible) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
     let animationFrameId: number;
     let width = (canvas.width = canvas.parentElement?.clientWidth || window.innerWidth);
-    let height = (canvas.height =
-      canvas.parentElement?.clientHeight || window.innerHeight);
+    let height = (canvas.height = canvas.parentElement?.clientHeight || window.innerHeight);
 
     const handleResize = () => {
-      if (!canvas) return;
-      width = canvas.width = canvas.parentElement?.clientWidth || window.innerWidth;
-      height = canvas.height =
-        canvas.parentElement?.clientHeight || window.innerHeight;
+      if (!canvas || !canvas.parentElement) return;
+      width = canvas.width = canvas.parentElement.clientWidth;
+      height = canvas.height = canvas.parentElement.clientHeight;
     };
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize, { passive: true });
 
     interface Particle {
       x: number;
@@ -75,7 +84,7 @@ export const AssetVideo: React.FC<AssetVideoProps> = ({
     }
 
     const particles: Particle[] = [];
-    const count = 35;
+    const count = 28;
 
     for (let i = 0; i < count; i++) {
       particles.push({
@@ -94,7 +103,8 @@ export const AssetVideo: React.FC<AssetVideoProps> = ({
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      particles.forEach((p) => {
+      for (let i = 0; i < count; i++) {
+        const p = particles[i];
         p.y += p.speedY;
         p.x += p.speedX;
         p.life++;
@@ -105,15 +115,14 @@ export const AssetVideo: React.FC<AssetVideoProps> = ({
           p.life = 0;
         }
 
-        const alpha =
-          p.opacity * Math.sin((p.life / p.maxLife) * Math.PI);
+        const alpha = p.opacity * Math.sin((p.life / p.maxLife) * Math.PI);
 
         ctx.fillStyle = p.color;
         ctx.globalAlpha = Math.max(0, alpha);
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
-      });
+      }
 
       animationFrameId = requestAnimationFrame(render);
     };
@@ -124,10 +133,14 @@ export const AssetVideo: React.FC<AssetVideoProps> = ({
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [isVisible]);
 
   return (
-    <div className={cn("relative w-full h-full overflow-hidden bg-background", className)}>
+    <div
+      ref={containerRef}
+      className={cn("relative w-full h-full overflow-hidden bg-background will-change-transform", className)}
+      style={{ transform: "translateZ(0)" }}
+    >
       {/* Background Image / Video */}
       {videoAvailable ? (
         <video
@@ -137,7 +150,9 @@ export const AssetVideo: React.FC<AssetVideoProps> = ({
           loop
           muted
           playsInline
+          disablePictureInPicture
           onLoadedData={() => setVideoLoaded(true)}
+          onError={() => setVideoAvailable(false)}
           className={cn(
             "absolute inset-0 w-full h-full object-cover transition-opacity duration-1000",
             videoLoaded ? "opacity-100 scale-100" : "opacity-0 scale-105"

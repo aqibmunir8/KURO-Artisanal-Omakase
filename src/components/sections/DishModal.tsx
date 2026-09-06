@@ -5,7 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MenuItem } from "@/data/restaurantData";
 import { AssetImage } from "@/components/ui/AssetImage";
 import { sound } from "@/lib/sound";
-import { X, Wine, Sparkles, MapPin, CheckCircle2 } from "lucide-react";
+import { X, Wine, Sparkles, MapPin, CheckCircle2, Bookmark } from "lucide-react";
+import { useLocalData } from "@/context/LocalDataContext";
 
 interface DishModalProps {
   dish: MenuItem | null;
@@ -14,7 +15,11 @@ interface DishModalProps {
 }
 
 export const DishModal: React.FC<DishModalProps> = ({ dish, onClose, onOpenReservation }) => {
+  const { isFavorite, toggleFavorite } = useLocalData();
+
   if (!dish) return null;
+
+  const favorited = isFavorite(dish.id);
 
   return (
     <AnimatePresence>
@@ -39,17 +44,34 @@ export const DishModal: React.FC<DishModalProps> = ({ dish, onClose, onOpenReser
           transition={{ type: "spring", damping: 25, stiffness: 300 }}
           className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-surface-100 rounded-3xl border border-gold-400/30 shadow-[0_20px_60px_rgba(0,0,0,0.8)] z-10 grid grid-cols-1 md:grid-cols-12 overflow-hidden"
         >
-          {/* Close Button */}
-          <button
-            onClick={() => {
-              sound.playClick();
-              onClose();
-            }}
-            aria-label="Close dish details modal"
-            className="absolute top-4 right-4 z-20 p-2 rounded-full bg-black/60 hover:bg-black text-zinc-400 hover:text-white border border-white/10 transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          {/* Top Actions: Bookmark & Close */}
+          <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
+            <button
+              onClick={() => {
+                sound.playClick();
+                toggleFavorite(dish.id);
+              }}
+              aria-label="Save dish to favorites"
+              className={`p-2 rounded-full backdrop-blur-md transition-all ${
+                favorited
+                  ? "bg-gold-500 text-black shadow-[0_0_12px_rgba(212,175,55,0.6)]"
+                  : "bg-black/60 hover:bg-black text-zinc-400 hover:text-white border border-white/10"
+              }`}
+            >
+              <Bookmark className={`w-5 h-5 ${favorited ? "fill-black" : ""}`} />
+            </button>
+
+            <button
+              onClick={() => {
+                sound.playClick();
+                onClose();
+              }}
+              aria-label="Close dish details modal"
+              className="p-2 rounded-full bg-black/60 hover:bg-black text-zinc-400 hover:text-white border border-white/10 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
 
           {/* Image Showcase Column */}
           <div className="md:col-span-6 relative aspect-square md:aspect-auto min-h-[280px] md:min-h-[440px]">
