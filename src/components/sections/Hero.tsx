@@ -24,7 +24,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenReservation }) => {
       <div className="absolute inset-0 z-0">
         <AssetVideo
           videoKey="hero-bg"
-          fallbackImage="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=2000&q=85"
+          fallbackImage="/assets/hero-bg.jpg"
           alt="KURO Omakase Binchotan Charcoal Seared Otoro"
           overlayOpacity={0.65}
         />

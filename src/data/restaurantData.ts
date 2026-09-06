@@ -78,7 +78,7 @@ export const MENU_ITEMS: MenuItem[] = [
     provenance: "Shiogama Port, Miyagi Prefecture, Japan",
     pairingNote: "Paired with Juyondai 'Black Label' Junmai Daiginjo (Yamagata)",
     imageKey: "dish-1",
-    fallbackImage: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=1200&q=85",
+    fallbackImage: "/assets/dish-1.jpg",
     tags: ["Signature", "Charcoal Seared", "Raw Bar"],
   },
   {
@@ -92,7 +92,7 @@ export const MENU_ITEMS: MenuItem[] = [
     provenance: "Ezo Sea, Nemuro, Hokkaido",
     pairingNote: "Paired with 2018 Domaine Leflaive Puligny-Montrachet 1er Cru",
     imageKey: "dish-2",
-    fallbackImage: "https://images.unsplash.com/photo-1611143669185-af224c5e3252?auto=format&fit=crop&w=1200&q=85",
+    fallbackImage: "/assets/dish-2.jpg",
     tags: ["Seasonal", "Delicate", "Caviar"],
   },
   {
@@ -106,7 +106,7 @@ export const MENU_ITEMS: MenuItem[] = [
     provenance: "Miyazaki Prefecture, Kyushu",
     pairingNote: "Paired with 2016 Chateau Pontet-Canet, Pauillac Grand Cru",
     imageKey: "dish-3",
-    fallbackImage: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=85",
+    fallbackImage: "/assets/dish-3.jpg",
     tags: ["Fire Craft", "Wagyu", "Truffle"],
   },
   {
@@ -120,7 +120,7 @@ export const MENU_ITEMS: MenuItem[] = [
     provenance: "Okhotsk Sea / Rishiri Island",
     pairingNote: "Paired with Kokuryu 'Black Dragon' Shizuku Junmai Daiginjo",
     imageKey: "dish-4",
-    fallbackImage: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=1200&q=85",
+    fallbackImage: "/assets/dish-4.jpg",
     tags: ["Broth", "Umami", "Tableside"],
   },
   {
@@ -134,7 +134,7 @@ export const MENU_ITEMS: MenuItem[] = [
     provenance: "Kagoshima Farm & Perigord, France",
     pairingNote: "Paired with Isojiman 'Nobilmente' Junmai Daiginjo",
     imageKey: "dish-5",
-    fallbackImage: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1200&q=85",
+    fallbackImage: "/assets/dish-5.jpg",
     tags: ["Warm", "Savory Custard", "Luxury"],
   },
   {
@@ -148,7 +148,7 @@ export const MENU_ITEMS: MenuItem[] = [
     provenance: "Uji, Kyoto, Japan",
     pairingNote: "Paired with Yamazaki 18-Year Single Malt Sherry Cask",
     imageKey: "dish-6",
-    fallbackImage: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=1200&q=85",
+    fallbackImage: "/assets/dish-6.jpg",
     tags: ["Dessert", "Smoked Tea", "Avant-Garde"],
   },
   {
@@ -162,7 +162,7 @@ export const MENU_ITEMS: MenuItem[] = [
     provenance: "Osaka, Japan",
     price: 95,
     imageKey: "cocktail-pairing",
-    fallbackImage: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1200&q=85",
+    fallbackImage: "/assets/cocktail-pairing.jpg",
     tags: ["Cocktail", "Whisky", "Rare"],
   },
   {
@@ -191,7 +191,7 @@ export const PHILOSOPHY_PILLARS: PhilosophyPillar[] = [
     description: "Sourced from pristine Ubame oak forests in Wakayama, our white charcoal burns smokelessly at over 1,000°C. Its intense far-infrared waves sear delicacies in milliseconds, sealing natural juices while imparting delicate woody minerality.",
     detail: "Harvested through a 300-year-old kiln firing method requiring 14 days of continuous stewardship by master carbonizers.",
     imageKey: "craft-fire",
-    fallbackImage: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=85",
+    fallbackImage: "/assets/craft-fire.jpg",
   },
   {
     id: "pillar-2",
@@ -202,7 +202,7 @@ export const PHILOSOPHY_PILLARS: PhilosophyPillar[] = [
     description: "Every dawn, our private purveyor in Toyosu and Hokkaido selects line-caught fish and shellfish, air-freighting the harvest directly to our kitchen within 16 hours of catch. No intermediaries, no compromises.",
     detail: "Aged individually through controlled Ikejime and Shinkei-jime neurological preservation methods to maximize sweet nucleotide umami.",
     imageKey: "dish-1",
-    fallbackImage: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=1200&q=85",
+    fallbackImage: "/assets/dish-1.jpg",
   },
   {
     id: "pillar-3",
@@ -213,7 +213,7 @@ export const PHILOSOPHY_PILLARS: PhilosophyPillar[] = [
     description: "Every evening is an unrepeatable culinary theater. With only 12 guests seated along a 300-year-old single-slab charred Hinoki counter, our chefs orchestrate an intimate sensory dialog where every motion is calibrated.",
     detail: "Handmade Karatsu ceramics, hand-blown Edo glass, and Damascus yanagiba blades honed daily on natural Kyoto waterstones.",
     imageKey: "interior-counter",
-    fallbackImage: "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=1200&q=85",
+    fallbackImage: "/assets/interior-counter.jpg",
   },
 ];
 
@@ -224,7 +224,7 @@ export const CHEF_PROFILE = {
   bio: "With over 24 years honing culinary discipline across Ginza, Kyoto, and Manhattan, Chef Kenzo has redefined modern omakase by marrying traditional Edo-mae precision with elemental woodfire alchemy. Former Executive Chef of three 3-Michelin-starred institutions in Tokyo and Kyoto.",
   quote: "Fire is not merely a method of heat; it is an elemental catalyst of memory, fragrance, and sacred communion.",
   imageKey: "chef-portrait",
-  fallbackImage: "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=1200&q=85",
+  fallbackImage: "/assets/chef-portrait.jpg",
 };
 
 export const TESTIMONIALS: Testimonial[] = [

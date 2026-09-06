@@ -12,7 +12,7 @@ export const AmbienceGallery: React.FC = () => {
     {
       key: "interior-counter",
       isVideo: false,
-      fallback: "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=1200&q=85",
+      fallback: "/assets/interior-counter.jpg",
       title: "The 300-Year Hinoki Counter",
       subtitle: "12 Exclusive Seats",
       span: "col-span-12 md:col-span-7",
@@ -20,7 +20,7 @@ export const AmbienceGallery: React.FC = () => {
     {
       key: "interior-ambient",
       isVideo: true,
-      fallback: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1200&q=85",
+      fallback: "/assets/interior-ambient.jpg",
       title: "Atmospheric Sanctuary & Counter",
       subtitle: "Cinematic Room Perspective",
       span: "col-span-12 md:col-span-5",
@@ -28,7 +28,7 @@ export const AmbienceGallery: React.FC = () => {
     {
       key: "craft-smoke",
       isVideo: true,
-      fallback: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=85",
+      fallback: "/assets/craft-smoke.jpg",
       title: "The Binchotan Hearth",
       subtitle: "Far-Infrared Charcoal Sear",
       span: "col-span-12 md:col-span-5",
@@ -36,7 +36,7 @@ export const AmbienceGallery: React.FC = () => {
     {
       key: "cocktail-smoke",
       isVideo: true,
-      fallback: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1200&q=85",
+      fallback: "/assets/cocktail-smoke.jpg",
       title: "Smokeworks Mixology & Sake Cellar",
       subtitle: "Rare Vintage Cask Selections",
       span: "col-span-12 md:col-span-7",

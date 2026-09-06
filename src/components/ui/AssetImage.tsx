@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 interface AssetImageProps {
   imageKey: string;
-  fallbackUrl: string;
+  fallbackUrl?: string;
   alt: string;
   fill?: boolean;
   width?: number;
@@ -29,22 +29,20 @@ export const AssetImage: React.FC<AssetImageProps> = ({
   quality = 85,
   sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
 }) => {
-  const [src, setSrc] = useState<string>(fallbackUrl);
+  const resolvedPath =
+    fallbackUrl && fallbackUrl.startsWith("/")
+      ? fallbackUrl
+      : `/assets/${imageKey}.jpg`;
+
+  const [src, setSrc] = useState<string>(resolvedPath);
   const [loaded, setLoaded] = useState(false);
-  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    // Attempt to test if local asset exists
-    const localPath = `/assets/${imageKey}.jpg`;
-    const img = new window.Image();
-    img.src = localPath;
-    img.onload = () => {
-      setSrc(localPath);
-    };
-    img.onerror = () => {
-      // Keep fallback URL
-      setSrc(fallbackUrl);
-    };
+    const targetPath =
+      fallbackUrl && fallbackUrl.startsWith("/")
+        ? fallbackUrl
+        : `/assets/${imageKey}.jpg`;
+    setSrc(targetPath);
   }, [imageKey, fallbackUrl]);
 
   return (
@@ -55,16 +53,19 @@ export const AssetImage: React.FC<AssetImageProps> = ({
         className
       )}
     >
-      {/* Skeleton Shimmer */}
+      {/* Luxury Skeleton Screen with Shimmer Effect */}
       <div
         className={cn(
-          "absolute inset-0 bg-gradient-to-r from-surface-100 via-surface-50 to-surface-100 animate-shimmer transition-opacity duration-700 pointer-events-none z-0",
+          "absolute inset-0 z-10 bg-surface-100 transition-opacity duration-700 pointer-events-none overflow-hidden",
           loaded ? "opacity-0" : "opacity-100"
         )}
-      />
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-surface-200 via-surface-50 to-surface-200 animate-pulse" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,rgba(212,175,55,0.08)_50%,transparent_100%)] animate-shimmer [background-size:200%_100%]" />
+      </div>
 
       <Image
-        src={hasError ? fallbackUrl : src}
+        src={src}
         alt={alt}
         fill={fill}
         width={!fill ? width : undefined}
@@ -73,16 +74,12 @@ export const AssetImage: React.FC<AssetImageProps> = ({
         quality={quality}
         sizes={sizes}
         onLoad={() => setLoaded(true)}
-        onError={() => {
-          setHasError(true);
-          setSrc(fallbackUrl);
-          setLoaded(true);
-        }}
         className={cn(
-          "object-cover transition-all duration-1000 ease-out",
+          "object-cover transition-all duration-700 ease-out",
           loaded ? "opacity-100 scale-100 blur-0" : "opacity-0 scale-105 blur-sm"
         )}
       />
     </div>
   );
 };
+
