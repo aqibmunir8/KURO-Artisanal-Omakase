@@ -1,0 +1,320 @@
+- generic [active] [ref=f1e1]:
+  - main [ref=f1e2]:
+    - generic [ref=f1e5]:
+      - link "黒 KURO New York · Omakase" [ref=f1e6] [cursor=pointer]:
+        - /url: "#"
+        - generic [ref=f1e7]: 黒
+        - generic [ref=f1e9]:
+          - generic [ref=f1e10]: KURO
+          - generic [ref=f1e11]: New York · Omakase
+      - navigation [ref=f1e12]:
+        - link "Philosophy" [ref=f1e13] [cursor=pointer]:
+          - /url: "#philosophy"
+        - link "Tasting Menu" [ref=f1e14] [cursor=pointer]:
+          - /url: "#menu"
+        - link "The Craft" [ref=f1e15] [cursor=pointer]:
+          - /url: "#craft"
+        - link "Ambience" [ref=f1e16] [cursor=pointer]:
+          - /url: "#ambience"
+        - link "Location" [ref=f1e17] [cursor=pointer]:
+          - /url: "#location"
+      - generic [ref=f1e18]:
+        - button "Mute Ambient Audio" [ref=f1e19] [cursor=pointer]:
+          - generic [ref=f1e21]: Sound On
+        - button "Reserve Seat" [ref=f1e22] [cursor=pointer]
+    - generic [ref=f1e26]:
+      - img "KURO Omakase Binchotan Charcoal Seared Otoro" [ref=f1e30]
+      - generic [ref=f1e32]:
+        - generic [ref=f1e33]: Two Michelin Stars (2025) · SoHo New York
+        - generic [ref=f1e37]: 一期一会 · 備長炭
+        - heading "Where Fire Meets Transcendence" [level=1] [ref=f1e38]:
+          - text: Where Fire
+          - generic [ref=f1e39]: Meets Transcendence
+        - paragraph [ref=f1e40]: An intimate 12-seat culinary sanctuary where ancestral Kishu Binchotan fire meets ultra-pristine Japanese ocean harvest.
+        - generic [ref=f1e41]:
+          - button "Reserve Counter Seat" [ref=f1e42] [cursor=pointer]
+          - button "Explore 18 Courses" [ref=f1e45] [cursor=pointer]
+        - generic [ref=f1e46]:
+          - generic [ref=f1e47]:
+            - generic [ref=f1e48]: "12"
+            - generic [ref=f1e49]: Exclusive Seats
+          - generic [ref=f1e50]:
+            - generic [ref=f1e51]: "18"
+            - generic [ref=f1e52]: Omakase Courses
+          - generic [ref=f1e53]:
+            - generic [ref=f1e54]: 1,000°C
+            - generic [ref=f1e55]: Charcoal Temperature
+          - generic [ref=f1e56]:
+            - generic [ref=f1e57]: ★★
+            - generic [ref=f1e58]: Michelin Stars
+      - button "Scroll to menu section" [ref=f1e59] [cursor=pointer]:
+        - generic [ref=f1e60]: Scroll
+    - generic [ref=f1e63]:
+      - generic [ref=f1e64]:
+        - generic [ref=f1e65]: Our Foundation
+        - heading "The Three Sacred Pillars" [level=2] [ref=f1e67]
+        - paragraph [ref=f1e68]: An uncompromising devotion to ancient fire mastery, neurological fish aging, and single-guest intimacy.
+      - generic [ref=f1e70]:
+        - button "Kishu Binchotan Fire" [ref=f1e71] [cursor=pointer]
+        - button "Tsukiji Dawn Harvest" [ref=f1e75] [cursor=pointer]
+        - button "Ichigo Ichie (一期一会)" [ref=f1e81] [cursor=pointer]
+      - generic [ref=f1e88]:
+        - generic: 炭
+        - generic [ref=f1e89]:
+          - generic [ref=f1e90]:
+            - img "Kishu Binchotan Fire" [ref=f1e92]
+            - generic [ref=f1e93]:
+              - generic [ref=f1e94]: PILLAR 01
+              - generic [ref=f1e95]: The Soul of Clean Heat
+          - generic [ref=f1e96]:
+            - generic [ref=f1e97]:
+              - generic [ref=f1e98]: 炭
+              - generic [ref=f1e99]: // The Soul of Clean Heat
+            - heading "Kishu Binchotan Fire" [level=3] [ref=f1e100]
+            - paragraph [ref=f1e101]: Sourced from pristine Ubame oak forests in Wakayama, our white charcoal burns smokelessly at over 1,000°C. Its intense far-infrared waves sear delicacies in milliseconds, sealing natural juices while imparting delicate woody minerality.
+            - paragraph [ref=f1e103]: "\"Harvested through a 300-year-old kiln firing method requiring 14 days of continuous stewardship by master carbonizers.\""
+    - generic [ref=f1e104]:
+      - generic [ref=f1e105]:
+        - generic [ref=f1e106]: Sensory Journey
+        - heading "The 18-Course Omakase" [level=2] [ref=f1e111]
+        - paragraph [ref=f1e112]: A progression of cold water delicacies and high-heat charcoal sears calibrated to order. Served exclusively at our 12-seat cedar counter.
+        - generic [ref=f1e113]:
+          - generic [ref=f1e114]:
+            - generic [ref=f1e115]: "Grand Tasting:"
+            - generic [ref=f1e116]: $385
+          - generic [ref=f1e117]: "|"
+          - generic [ref=f1e118]:
+            - generic [ref=f1e119]: "Reserve Wine & Sake:"
+            - generic [ref=f1e120]: +$220
+      - generic [ref=f1e122]:
+        - button "Culinary Courses" [ref=f1e123] [cursor=pointer]
+        - button "Rare Sake & Spirits" [ref=f1e126] [cursor=pointer]
+        - button "Saved / Favorites" [ref=f1e129] [cursor=pointer]
+      - generic [ref=f1e132]:
+        - generic [ref=f1e133] [cursor=pointer]:
+          - generic [ref=f1e134]:
+            - img "Signature Otoro Nigiri" [ref=f1e136]
+            - generic [ref=f1e137]: Course 1
+            - button "Save dish to favorites" [ref=f1e141]
+          - generic [ref=f1e144]:
+            - generic [ref=f1e145]:
+              - generic [ref=f1e146]:
+                - generic [ref=f1e147]: 大トロ 備長炭
+                - generic [ref=f1e148]: Shiogama Port
+              - heading "Signature Otoro Nigiri" [level=3] [ref=f1e149]
+              - paragraph [ref=f1e150]: Line-caught Bluefin Tuna belly lightly kiss-seared over glowing Kishu Binchotan charcoal, brushed with 8-year aged barrel nikiri, imperial oscietra caviar, and 24k edible gold leaf.
+            - generic [ref=f1e151]:
+              - generic [ref=f1e152]:
+                - generic [ref=f1e153]: Signature
+                - generic [ref=f1e154]: Charcoal Seared
+              - generic [ref=f1e155]: Details →
+        - generic [ref=f1e156] [cursor=pointer]:
+          - generic [ref=f1e157]:
+            - img "Hokkaido Uni & Charcoal Tartlet" [ref=f1e159]
+            - generic [ref=f1e160]: Course 2
+            - button "Save dish to favorites" [ref=f1e164]
+          - generic [ref=f1e167]:
+            - generic [ref=f1e168]:
+              - generic [ref=f1e169]:
+                - generic [ref=f1e170]: 雲丹 炭火海苔
+                - generic [ref=f1e171]: Ezo Sea
+              - heading "Hokkaido Uni & Charcoal Tartlet" [level=3] [ref=f1e172]
+              - paragraph [ref=f1e173]: Golden Bafun Sea Urchin layered over smoked dashi custard in an ultra-crisp charcoal nori crust, topped with finger lime spheres and mountain wasabi.
+            - generic [ref=f1e174]:
+              - generic [ref=f1e175]:
+                - generic [ref=f1e176]: Seasonal
+                - generic [ref=f1e177]: Delicate
+              - generic [ref=f1e178]: Details →
+        - generic [ref=f1e179] [cursor=pointer]:
+          - generic [ref=f1e180]:
+            - img "Binchotan Smoked Miyazaki Wagyu A5" [ref=f1e182]
+            - generic [ref=f1e183]: Course 3
+            - button "Save dish to favorites" [ref=f1e187]
+          - generic [ref=f1e190]:
+            - generic [ref=f1e191]:
+              - generic [ref=f1e192]:
+                - generic [ref=f1e193]: 宮崎牛 炭焼き
+                - generic [ref=f1e194]: Miyazaki Prefecture
+              - heading "Binchotan Smoked Miyazaki Wagyu A5" [level=3] [ref=f1e195]
+              - paragraph [ref=f1e196]: Tenderloin medallion slow-smoked over charred cherry wood and high-heat white charcoal, served with fresh shaved black winter truffles, smoked Okinawa sea salt, and aged garlic shoyu.
+            - generic [ref=f1e197]:
+              - generic [ref=f1e198]:
+                - generic [ref=f1e199]: Fire Craft
+                - generic [ref=f1e200]: Wagyu
+              - generic [ref=f1e201]: Details →
+        - generic [ref=f1e202] [cursor=pointer]:
+          - generic [ref=f1e203]:
+            - img "Smoked Dashi & King Crab Consommé" [ref=f1e205]
+            - generic [ref=f1e206]: Course 4
+            - button "Save dish to favorites" [ref=f1e210]
+          - generic [ref=f1e213]:
+            - generic [ref=f1e214]:
+              - generic [ref=f1e215]:
+                - generic [ref=f1e216]: タラバ蟹 出汁
+                - generic [ref=f1e217]: Okhotsk Sea / Rishiri Island
+              - heading "Smoked Dashi & King Crab Consommé" [level=3] [ref=f1e218]
+              - paragraph [ref=f1e219]: Clarified amber broth steeped with 36-month aged Rishiri kombu and smoked bonito, poured tableside over sweet red King Crab and delicate purple shiso blossoms.
+            - generic [ref=f1e220]:
+              - generic [ref=f1e221]:
+                - generic [ref=f1e222]: Broth
+                - generic [ref=f1e223]: Umami
+              - generic [ref=f1e224]: Details →
+        - generic [ref=f1e225] [cursor=pointer]:
+          - generic [ref=f1e226]:
+            - img "Black Truffle & Foie Gras Chawanmushi" [ref=f1e228]
+            - generic [ref=f1e229]: Course 5
+            - button "Save dish to favorites" [ref=f1e233]
+          - generic [ref=f1e236]:
+            - generic [ref=f1e237]:
+              - generic [ref=f1e238]:
+                - generic [ref=f1e239]: 茶碗蒸し 黒トリュフ
+                - generic [ref=f1e240]: Kagoshima Farm & Perigord
+              - heading "Black Truffle & Foie Gras Chawanmushi" [level=3] [ref=f1e241]
+              - paragraph [ref=f1e242]: Silken Japanese egg custard steamed with smoked jidori chicken dashi, Hudson Valley foie gras medallion, and abundant shaved black winter melanosporum truffle.
+            - generic [ref=f1e243]:
+              - generic [ref=f1e244]:
+                - generic [ref=f1e245]: Warm
+                - generic [ref=f1e246]: Savory Custard
+              - generic [ref=f1e247]: Details →
+        - generic [ref=f1e248] [cursor=pointer]:
+          - generic [ref=f1e249]:
+            - img "Smoked Hojicha & Dark Chocolate Sphere" [ref=f1e251]
+            - generic [ref=f1e252]: Course 6
+            - button "Save dish to favorites" [ref=f1e256]
+          - generic [ref=f1e259]:
+            - generic [ref=f1e260]:
+              - generic [ref=f1e261]:
+                - generic [ref=f1e262]: 焙じ茶 炭球 菓子
+                - generic [ref=f1e263]: Uji
+              - heading "Smoked Hojicha & Dark Chocolate Sphere" [level=3] [ref=f1e264]
+              - paragraph [ref=f1e265]: Charcoal-dusted 72% single-origin dark chocolate shell filled with roasted Kyoto hojicha mousse, smoked sea salt caramel, yuzu gel, and liquid nitrogen matcha clouds.
+            - generic [ref=f1e266]:
+              - generic [ref=f1e267]:
+                - generic [ref=f1e268]: Dessert
+                - generic [ref=f1e269]: Smoked Tea
+              - generic [ref=f1e270]: Details →
+      - button "Book Your 18-Course Experience" [ref=f1e272] [cursor=pointer]
+    - generic [ref=f1e274]:
+      - generic [ref=f1e275]:
+        - generic [ref=f1e276]:
+          - img "Chef Kenzo Takahashi" [ref=f1e278]
+          - generic [ref=f1e279]:
+            - generic [ref=f1e280]: 高橋 賢三
+            - generic [ref=f1e281]: Chef Kenzo Takahashi
+            - generic [ref=f1e282]: Chef Patron & Charcoal Artisan
+        - generic [ref=f1e287]:
+          - generic [ref=f1e288]: 24+ Years
+          - generic [ref=f1e289]: Ginza & Tokyo Mastery
+      - generic [ref=f1e290]:
+        - generic [ref=f1e291]: The Master & The Hearth
+        - heading "Charcoal Alchemy & Ancestral Blade Discipline" [level=2] [ref=f1e295]
+        - blockquote [ref=f1e296]: "\"Fire is not merely a method of heat; it is an elemental catalyst of memory, fragrance, and sacred communion.\""
+        - paragraph [ref=f1e297]: With over 24 years honing culinary discipline across Ginza, Kyoto, and Manhattan, Chef Kenzo has redefined modern omakase by marrying traditional Edo-mae precision with elemental woodfire alchemy. Former Executive Chef of three 3-Michelin-starred institutions in Tokyo and Kyoto.
+        - generic [ref=f1e298]:
+          - generic [ref=f1e302]:
+            - heading "1,000°C Binchotan Sear" [level=4] [ref=f1e303]
+            - paragraph [ref=f1e304]: Pure far-infrared radiation that locks in delicate ocean sweetness in 0.8 seconds.
+          - generic [ref=f1e309]:
+            - heading "12-Guest Exclusivity" [level=4] [ref=f1e310]
+            - paragraph [ref=f1e311]: Every dish is presented directly into the guest's hands at its optimal thermal peak.
+    - generic [ref=f1e312]:
+      - generic [ref=f1e313]:
+        - generic [ref=f1e314]: Atmosphere & Space
+        - heading "The 12-Seat Sanctuary" [level=2] [ref=f1e318]
+        - paragraph [ref=f1e319]: Designed with charred cedar Shou Sugi Ban, raw granite, and acoustic damping to create an undisturbed sensory haven in the heart of SoHo.
+      - generic [ref=f1e320]:
+        - generic [ref=f1e321]:
+          - img "The 300-Year Hinoki Counter" [ref=f1e323]
+          - generic:
+            - generic:
+              - generic: 12 Exclusive Seats
+              - heading "The 300-Year Hinoki Counter" [level=3]
+        - generic [ref=f1e324]:
+          - img "Atmospheric Sanctuary & Counter" [ref=f1e327]
+          - generic:
+            - generic:
+              - generic: Cinematic Room Perspective
+              - heading "Atmospheric Sanctuary & Counter" [level=3]
+        - generic [ref=f1e329]:
+          - img "The Binchotan Hearth" [ref=f1e332]
+          - generic:
+            - generic:
+              - generic: Far-Infrared Charcoal Sear
+              - heading "The Binchotan Hearth" [level=3]
+        - generic [ref=f1e334]:
+          - img "Smokeworks Mixology & Sake Cellar" [ref=f1e337]
+          - generic:
+            - generic:
+              - generic: Rare Vintage Cask Selections
+              - heading "Smokeworks Mixology & Sake Cellar" [level=3]
+      - generic [ref=f1e339]:
+        - generic [ref=f1e340]: Critical Acclaim & Distinction
+        - generic [ref=f1e341]:
+          - generic [ref=f1e342]:
+            - paragraph [ref=f1e359]: "\"KURO offers one of the most transcendent dining experiences in the Western Hemisphere. The binchotan-kissed otoro is pure poetry.\""
+            - generic [ref=f1e360]:
+              - generic [ref=f1e361]: Pete Wells
+              - generic [ref=f1e362]: Chief Food Critic · The New York Times
+          - generic [ref=f1e363]:
+            - paragraph [ref=f1e380]: "\"An immaculate temple of charcoal, knife craft, and sake curation. Every dish possesses the poise of high art.\""
+            - generic [ref=f1e381]:
+              - generic [ref=f1e382]: Michelin Guide Inspectors
+              - generic [ref=f1e383]: Editorial Evaluation · Michelin Guide New York
+          - generic [ref=f1e384]:
+            - paragraph [ref=f1e401]: "\"Dining here feels less like a meal and more like an intimate chamber concert where every note is flavored with smoke and sea.\""
+            - generic [ref=f1e402]:
+              - generic [ref=f1e403]: Robb Report
+              - generic [ref=f1e404]: Best of the Best Luxury Awards · Culinary Sanctuary of the Year
+    - generic [ref=f1e406]:
+      - generic [ref=f1e407]:
+        - generic [ref=f1e408]:
+          - generic [ref=f1e409]: 12 Exclusive Seats Nightly
+          - heading "Experience the Charcoal Alchemy" [level=3] [ref=f1e413]
+          - paragraph [ref=f1e414]: Bookings open on the 1st of each month for the subsequent 30-day dining cycle.
+        - button "Reserve Your Counter Seat" [ref=f1e415] [cursor=pointer]
+      - generic [ref=f1e416]:
+        - generic [ref=f1e417]:
+          - generic [ref=f1e418]:
+            - generic [ref=f1e419]:
+              - generic [ref=f1e420]: 黒
+              - generic [ref=f1e422]:
+                - text: KURO
+                - generic [ref=f1e423]: Artisanal Omakase
+            - paragraph [ref=f1e424]: An unhurried ritual of Kishu Binchotan charcoal, Japanese lineage fish, and 12-seat hospitality.
+          - generic [ref=f1e425]:
+            - generic [ref=f1e426]:
+              - generic [ref=f1e427]: NEW YORK (EST)
+              - text: 04:08:34 AM
+            - generic [ref=f1e429]:
+              - generic [ref=f1e430]: TOKYO (JST)
+              - text: 05:08:34 PM
+        - generic [ref=f1e431]:
+          - heading "Location & Hours" [level=4] [ref=f1e432]
+          - generic [ref=f1e437]:
+            - generic [ref=f1e438]: 484 Broome Street, SoHo
+            - generic [ref=f1e439]: New York, NY 10013
+            - generic [ref=f1e440]: 40.7233° N, 74.0010° W
+          - generic [ref=f1e445]:
+            - generic [ref=f1e446]: "Two Seatings Nightly: 5:30 PM & 8:30 PM"
+            - generic [ref=f1e447]: Tuesday – Sunday (Closed Mondays)
+          - generic [ref=f1e452]:
+            - generic [ref=f1e453]: "Private Salon Concierge:"
+            - link "concierge@kuro-omakase.com" [ref=f1e454] [cursor=pointer]:
+              - /url: mailto:concierge@kuro-omakase.com
+        - generic [ref=f1e455]:
+          - heading "Private Allocation Journal" [level=4] [ref=f1e456]
+          - paragraph [ref=f1e457]: Receive private invitations to seasonal rare sake releases and priority counter openings.
+          - generic [ref=f1e458]:
+            - textbox "Enter VIP email..." [ref=f1e459]
+            - button "Subscribe to newsletter" [ref=f1e460] [cursor=pointer]
+          - generic [ref=f1e464]:
+            - paragraph [ref=f1e465]: "• Dress Code: Elegant Evening Attire required."
+            - paragraph [ref=f1e466]: "• Corkage: $150 per 720ml bottle (maximum 2 bottles)."
+      - generic [ref=f1e467]:
+        - generic [ref=f1e468]: © 2026 KURO Omakase Inc. All Rights Reserved.
+        - generic [ref=f1e469]:
+          - generic [ref=f1e470] [cursor=pointer]: Privacy Policy
+          - generic [ref=f1e471] [cursor=pointer]: Terms of Reservation
+          - generic [ref=f1e472]: 10K Awwwards-Tier Build
+  - button "Open Next.js Dev Tools" [ref=f1e481] [cursor=pointer]
+  - alert [ref=f1e485]

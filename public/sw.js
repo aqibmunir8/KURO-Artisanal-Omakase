@@ -56,6 +56,18 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(event.request.url);
 
+  // Bypass service worker for media files and byte-range requests (allow native browser streaming)
+  if (
+    event.request.headers.get("range") ||
+    url.pathname.endsWith(".mp4") ||
+    url.pathname.endsWith(".webm") ||
+    url.pathname.endsWith(".ogg") ||
+    url.pathname.endsWith(".mp3") ||
+    url.pathname.endsWith(".wav")
+  ) {
+    return;
+  }
+
   // For static assets, images, media: Cache First, then Network
   if (
     url.pathname.startsWith("/assets/") ||

@@ -26,6 +26,19 @@ export const AssetVideo: React.FC<AssetVideoProps> = ({
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  // Check readyState on mount and handle autoplay policies
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = true;
+    video.defaultMuted = true;
+
+    if (video.readyState >= 2) {
+      setVideoLoaded(true);
+    }
+  }, [videoKey]);
+
   // IntersectionObserver to pause heavy rendering when out of viewport
   useEffect(() => {
     const el = containerRef.current;
@@ -135,14 +148,25 @@ export const AssetVideo: React.FC<AssetVideoProps> = ({
     };
   }, [isVisible]);
 
+  const markLoaded = () => setVideoLoaded(true);
+
   return (
     <div
       ref={containerRef}
       className={cn("relative w-full h-full overflow-hidden bg-background will-change-transform", className)}
       style={{ transform: "translateZ(0)" }}
     >
-      {/* Background Image / Video */}
-      {videoAvailable ? (
+      {/* Background Poster Image (always mounted underneath for instant visual fidelity) */}
+      <AssetImage
+        imageKey={videoKey}
+        fallbackUrl={fallbackImage}
+        alt={alt}
+        priority
+        className="absolute inset-0 w-full h-full object-cover transform scale-105"
+      />
+
+      {/* Background Video */}
+      {videoAvailable && (
         <video
           ref={videoRef}
           src={`/assets/${videoKey}.mp4`}
@@ -150,21 +174,17 @@ export const AssetVideo: React.FC<AssetVideoProps> = ({
           loop
           muted
           playsInline
+          preload="auto"
           disablePictureInPicture
-          onLoadedData={() => setVideoLoaded(true)}
+          onLoadedData={markLoaded}
+          onLoadedMetadata={markLoaded}
+          onCanPlay={markLoaded}
+          onPlaying={markLoaded}
           onError={() => setVideoAvailable(false)}
           className={cn(
             "absolute inset-0 w-full h-full object-cover transition-opacity duration-1000",
             videoLoaded ? "opacity-100 scale-100" : "opacity-0 scale-105"
           )}
-        />
-      ) : (
-        <AssetImage
-          imageKey={videoKey}
-          fallbackUrl={fallbackImage}
-          alt={alt}
-          priority
-          className="absolute inset-0 w-full h-full object-cover transform scale-105 animate-pulse-slow"
         />
       )}
 
